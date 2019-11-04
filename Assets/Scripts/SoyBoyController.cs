@@ -12,6 +12,7 @@ public class SoyBoyController : MonoBehaviour
     public float jumpSpeed = 8f;
     public float jumpDurationThreshold = 0.25f;
     public float airAccelt = 3f;
+    public float jump = 14f;
 
     private float jumpDuration;
     private float rayCastLengthCheck = 0.005f;
@@ -53,6 +54,52 @@ public class SoyBoyController : MonoBehaviour
         else
         {
             return false;
+        }
+    }
+
+    public bool IsWalltoLeftOrRight()
+    {
+        bool wallOnLeft = Physics.Raycast(new Vector2(transform.position.x - width, transform.position.y), -Vector2.right, rayCastLengthCheck);
+        bool wallOnRight = Physics2D.Raycast(new Vector2(transform.position.x + width, transform.position.y), Vector2.right, rayCastLengthCheck);
+
+        if(wallOnLeft || wallOnRight)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool PlayerIsTouchingGroundOrWall()
+    {
+        if (PlayerIsOnGround() || IsWalltoLeftOrRight())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public int GetWallDirection()
+    {
+        bool isWallLeft = Physics.Raycast(new Vector2(transform.position.x - width, transform.position.y), -Vector2.right, rayCastLengthCheck);
+        bool isWallRight = Physics.Raycast(new Vector2(transform.position.x + width, transform.position.y), Vector2.right, rayCastLengthCheck);
+
+        if(isWallLeft)
+        {
+            return -1;
+        }
+        else if (isWallRight)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
         }
     }
 
@@ -117,9 +164,25 @@ public class SoyBoyController : MonoBehaviour
             xVelocity = rb.velocity.x;
         }
 
+        var yVelocity = 0f;
+
+        if (PlayerIsTouchingGroundOrWall() && input.y == 1)
+        {
+            yVelocity = jump;
+        }
+        else
+        {
+            yVelocity = rb.velocity.y;
+        }
+
         rb.AddForce(new Vector2(((input.x * speed) - rb.velocity.x) * acceleration, 0));
 
-        rb.velocity = new Vector2(xVelocity, rb.velocity.y);
+        rb.velocity = new Vector2(xVelocity, yVelocity);
+
+        if(IsWalltoLeftOrRight() && !PlayerIsOnGround() && input.y == 1)
+        {
+            rb.velocity = new Vector2(-GetWallDirection() * speed * 0.75f, rb.velocity.y);
+        }
 
         if(isJumping && jumpDuration < jumpDurationThreshold)
         {
