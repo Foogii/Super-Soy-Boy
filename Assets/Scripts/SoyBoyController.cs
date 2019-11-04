@@ -11,6 +11,7 @@ public class SoyBoyController : MonoBehaviour
     public float accel = 6f;
     public float jumpSpeed = 8f;
     public float jumpDurationThreshold = 0.25f;
+    public float airAccelt = 3f;
 
     private float jumpDuration;
     private float rayCastLengthCheck = 0.005f;
@@ -94,10 +95,20 @@ public class SoyBoyController : MonoBehaviour
 
     void FixedUpdate()
     {
-        var acceleration = accel;
+        var acceleration = 0f;
+        
+        if(PlayerIsOnGround())
+        {
+            acceleration = accel;
+        }
+        else
+        {
+            acceleration = airAccelt;
+        }
+
         var xVelocity = 0f;
 
-        if(input.x == 0)
+        if(PlayerIsOnGround() && input.x == 0)
         {
             xVelocity = 0f;
         }
