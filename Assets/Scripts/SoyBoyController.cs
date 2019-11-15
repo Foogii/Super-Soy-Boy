@@ -11,7 +11,7 @@ public class SoyBoyController : MonoBehaviour
     public float accel = 6f;
     public float jumpSpeed = 8f;
     public float jumpDurationThreshold = 0.25f;
-    public float airAccelt = 3f;
+    public float airAccel = 3f;
     public float jump = 14f;
 
     private float jumpDuration;
@@ -64,7 +64,7 @@ public class SoyBoyController : MonoBehaviour
 
     public bool IsWalltoLeftOrRight()
     {
-        bool wallOnLeft = Physics.Raycast(new Vector2(transform.position.x - width, transform.position.y), -Vector2.right, rayCastLengthCheck);
+        bool wallOnLeft = Physics2D.Raycast(new Vector2(transform.position.x - width, transform.position.y), -Vector2.right, rayCastLengthCheck);
         bool wallOnRight = Physics2D.Raycast(new Vector2(transform.position.x + width, transform.position.y), Vector2.right, rayCastLengthCheck);
 
         if(wallOnLeft || wallOnRight)
@@ -91,8 +91,8 @@ public class SoyBoyController : MonoBehaviour
 
     public int GetWallDirection()
     {
-        bool isWallLeft = Physics.Raycast(new Vector2(transform.position.x - width, transform.position.y), -Vector2.right, rayCastLengthCheck);
-        bool isWallRight = Physics.Raycast(new Vector2(transform.position.x + width, transform.position.y), Vector2.right, rayCastLengthCheck);
+        bool isWallLeft = Physics2D.Raycast(new Vector2(transform.position.x - width, transform.position.y), -Vector2.right, rayCastLengthCheck);
+        bool isWallRight = Physics2D.Raycast(new Vector2(transform.position.x + width, transform.position.y), Vector2.right, rayCastLengthCheck);
 
         if(isWallLeft)
         {
@@ -165,7 +165,7 @@ public class SoyBoyController : MonoBehaviour
         }
         else
         {
-            acceleration = airAccelt;
+            acceleration = airAccel;
         }
 
         var xVelocity = 0f;
