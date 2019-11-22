@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode loadsceneMode)
     {
-        if (scene.name == "Game")
+        if (scene.name == "Level1")
         {
             DisplayPreviousTimes();
         }
