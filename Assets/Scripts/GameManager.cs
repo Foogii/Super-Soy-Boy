@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator RestartLevelDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public List<PlayerTimeEntry> LoadPreviousTimes()

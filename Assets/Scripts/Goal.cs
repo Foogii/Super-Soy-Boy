@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Goal : MonoBehaviour
 {
@@ -29,10 +30,17 @@ public class Goal : MonoBehaviour
                 audioSource.PlayOneShot(goalClip);
             }
 
-            GameManager.instance.RestartLevel(0.5f);
+            StartCoroutine(LoadNewLevel(0.5f));
+            //GameManager.instance.RestartLevel(0.5f);
 
             var timer = FindObjectOfType<Timer>();
             GameManager.instance.SaveTime(timer.time);
         }
+    }
+
+    private IEnumerator LoadNewLevel(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
