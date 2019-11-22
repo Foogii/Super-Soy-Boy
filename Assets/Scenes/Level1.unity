@@ -2680,6 +2680,7 @@ MonoBehaviour:
   minY: -100
   maxX: 100
   maxY: 100
+  cameraZDepth: 0
 --- !u!20 &1383472456
 Camera:
   m_ObjectHideFlags: 0
@@ -3963,4 +3964,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f8790cd5053a684eb3d3351cdbf66ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelName: 
+  levelName: my super awesome level
